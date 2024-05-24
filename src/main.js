@@ -44,7 +44,6 @@ function handleSubmit(event) {
         });
       }
 
-      gallery.innerHTML = '';
       gallery.innerHTML = createGalleryMarkup(data.hits);
       simpleLightbox();
     })
@@ -52,14 +51,15 @@ function handleSubmit(event) {
     .finally(() => {
       loader.style.display = 'none';
     });
+
   input.value = '';
   form.reset();
 }
 
 function simpleLightbox() {
-  let gallery = new SimpleLightbox('.gallery a', {
+  let lightbox = new SimpleLightbox('.gallery a', {
     captionsData: 'alt',
     captionDelay: 250,
   });
-  gallery.refresh();
+  lightbox.refresh();
 }
