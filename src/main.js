@@ -12,6 +12,12 @@ const input = document.querySelector('#image');
 const gallery = document.querySelector('.gallery');
 const loader = document.querySelector('.loader');
 
+// Создаем экземпляр SimpleLightbox один раз в глобальной области
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
+
 form.addEventListener('submit', handleSubmit);
 
 function handleSubmit(event) {
@@ -26,6 +32,7 @@ function handleSubmit(event) {
       backgroundColor: '#ffa000',
       position: 'topRight',
     });
+    loader.style.display = 'none';
     return;
   }
 
@@ -36,30 +43,30 @@ function handleSubmit(event) {
       if (data.total === 0) {
         iziToast.error({
           title: 'Error',
-          message:
-            'Sorry, there are no images matching your search query. Please try again!',
+          message: 'Sorry, there are no images matching your search query. Please try again!',
           messageColor: '#fff',
           backgroundColor: '#ef4040',
           position: 'topRight',
         });
+      } else {
+        gallery.innerHTML = createGalleryMarkup(data.hits);
+        lightbox.refresh(); // Обновляем экземпляр lightbox
       }
-
-      gallery.innerHTML = createGalleryMarkup(data.hits);
-      simpleLightbox();
     })
-    .catch(error => alert(error))
+    .catch(error => {
+      iziToast.error({
+        title: 'Error',
+        message: 'Something went wrong. Please try again later.',
+        messageColor: '#fff',
+        backgroundColor: '#ef4040',
+        position: 'topRight',
+      });
+      console.error(error);
+    })
     .finally(() => {
       loader.style.display = 'none';
     });
 
   input.value = '';
   form.reset();
-}
-
-function simpleLightbox() {
-  let lightbox = new SimpleLightbox('.gallery a', {
-    captionsData: 'alt',
-    captionDelay: 250,
-  });
-  lightbox.refresh();
 }
