@@ -12,7 +12,7 @@ const input = document.querySelector('#image');
 const gallery = document.querySelector('.gallery');
 const loader = document.querySelector('.loader');
 
-// Создаем экземпляр SimpleLightbox один раз в глобальной области
+// Створюємо екземпляр SimpleLightbox один раз у глобальній області
 const lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
@@ -50,7 +50,7 @@ function handleSubmit(event) {
         });
       } else {
         gallery.innerHTML = createGalleryMarkup(data.hits);
-        lightbox.refresh(); // Обновляем экземпляр lightbox
+        lightbox.refresh(); // Оновлюємо екземпляр lightbox
       }
     })
     .catch(error => {
