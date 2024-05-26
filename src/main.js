@@ -48,6 +48,7 @@ function handleSubmit(event) {
           backgroundColor: '#ef4040',
           position: 'topRight',
         });
+        gallery.innerHTML = ''; // Очищаємо розмітку галереї
       } else {
         gallery.innerHTML = createGalleryMarkup(data.hits);
         lightbox.refresh(); // Оновлюємо екземпляр lightbox
@@ -62,6 +63,7 @@ function handleSubmit(event) {
         position: 'topRight',
       });
       console.error(error);
+      gallery.innerHTML = ''; // Очищаємо розмітку галереї у разі помилки
     })
     .finally(() => {
       loader.style.display = 'none';
